@@ -50,6 +50,7 @@ public class CrawlerServiceImp implements CrawlerService {
             }
             entries.add(new NewsEntry(number, title, points, comments));
         }
+        driver.close();
         driver.quit();
         return entries;
     }
