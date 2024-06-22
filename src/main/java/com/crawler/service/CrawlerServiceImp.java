@@ -8,7 +8,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CrawlerServiceImp implements CrawlerService {
@@ -48,17 +50,24 @@ public class CrawlerServiceImp implements CrawlerService {
             }
             entries.add(new NewsEntry(number, title, points, comments));
         }
+        driver.quit();
         return entries;
     }
 
     @Override
     public List<NewsEntry> filterLongTitles() {
-        return List.of();
+        return fetchEntries().stream()
+                .filter(entry -> entry.getTitleCount() > 5)
+                .sorted(Comparator.comparingInt(NewsEntry::getComments).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<NewsEntry> filterShortTitles() {
-        return List.of();
+        return fetchEntries().stream()
+                .filter(entry -> entry.getTitleCount() <= 5)
+                .sorted(Comparator.comparingInt(NewsEntry::getPoints).reversed())
+                .collect(Collectors.toList());
     }
 
 }
