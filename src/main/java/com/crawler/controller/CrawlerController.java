@@ -1,5 +1,6 @@
 package com.crawler.controller;
 
+import com.crawler.exceptions.ResourceNotFoundException;
 import com.crawler.model.NewsEntry;
 import com.crawler.service.CrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,28 @@ public class CrawlerController {
 
     @GetMapping("/")
     public List<NewsEntry> getAllEntries() {
-        return crawlerService.fetchNewsEntries();
+        List<NewsEntry> entries = crawlerService.fetchNewsEntries();
+        if (entries.isEmpty()) {
+            throw new ResourceNotFoundException("No news entries found");
+        }
+        return entries;
     }
 
     @GetMapping("/longestTitles")
     public List<NewsEntry> getLongestTitles() {
-        return crawlerService.filterLongTitles();
+        List<NewsEntry> entries = crawlerService.filterLongTitles();
+        if (entries.isEmpty()) {
+            throw new ResourceNotFoundException("No news entries with long titles found");
+        }
+        return entries;
     }
 
     @GetMapping("/shortestTitles")
     public List<NewsEntry> getShortestTitles() {
-        return crawlerService.filterShortTitles();
+        List<NewsEntry> entries = crawlerService.filterShortTitles();
+        if (entries.isEmpty()) {
+            throw new ResourceNotFoundException("No news entries with short titles found");
+        }
+        return entries;
     }
 }
