@@ -16,12 +16,13 @@ public class CrawlerServiceImp implements CrawlerService {
     }
 
     @Override
-    public List<NewsEntry> filterLongTitles(List<NewsEntry> entries) {
-        return null;
+    public List<NewsEntry> filterLongTitles() {
+        return List.of();
     }
 
     @Override
-    public List<NewsEntry> filterShortTitles(List<NewsEntry> entries) {
-        return null;
+    public List<NewsEntry> filterShortTitles() {
+        return List.of();
     }
+
 }
