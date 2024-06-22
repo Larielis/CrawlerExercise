@@ -3,36 +3,28 @@ package com.crawler.controller;
 import com.crawler.model.NewsEntry;
 import com.crawler.service.CrawlerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class CrawlerController {
     @Autowired
     private CrawlerService crawlerService;
 
     @GetMapping("/")
-    public ModelAndView home() {
-      return createModelAndView("home", crawlerService.fetchNewsEntries());
+    public List<NewsEntry> getAllEntries() {
+        return crawlerService.fetchNewsEntries();
     }
 
     @GetMapping("/longestTitles")
-    public ModelAndView longestTitles() {
-        return createModelAndView("longestTitles", crawlerService.filterLongTitles());
+    public List<NewsEntry> getLongestTitles() {
+        return crawlerService.filterLongTitles();
     }
 
     @GetMapping("/shortestTitles")
-    public ModelAndView shortestTitles() {
-        return createModelAndView("shortestTitles", crawlerService.filterShortTitles());
-    }
-
-    private ModelAndView createModelAndView(String viewName, List<NewsEntry> entries) {
-        ModelAndView modelAndView = new ModelAndView(viewName);
-        modelAndView.addObject("entries", entries);
-        return modelAndView;
+    public List<NewsEntry> getShortestTitles() {
+        return crawlerService.filterShortTitles();
     }
 }
