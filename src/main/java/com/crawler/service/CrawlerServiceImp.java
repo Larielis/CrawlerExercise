@@ -83,7 +83,7 @@ public class CrawlerServiceImp implements CrawlerService {
     @Override
     public List<NewsEntry> filterLongTitles() {
         List<NewsEntry> longTitlesEntries = new ArrayList<>();
-        for (NewsEntry entry : fetchEntries()) {
+        for (NewsEntry entry : cachedEntries) {
             if (entry.getTitleCount() > 5) {
                 longTitlesEntries.add(entry);
             }
@@ -95,7 +95,7 @@ public class CrawlerServiceImp implements CrawlerService {
     @Override
     public List<NewsEntry> filterShortTitles() {
         List<NewsEntry> shortTitlesEntries = new ArrayList<>();
-        for (NewsEntry entry : fetchEntries()) {
+        for (NewsEntry entry : cachedEntries) {
             if (entry.getTitleCount() <= 5) {
                 shortTitlesEntries.add(entry);
             }
