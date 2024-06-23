@@ -39,3 +39,7 @@ This app is designed to fetch the first 30 news entries from the news website [H
         "comments": 34
     }
     ]
+
+## Testing
+
+Test are located in ``src/test/java/com/crawler/`` implemented with JUnit and mockito frameworks
