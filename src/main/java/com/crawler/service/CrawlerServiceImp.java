@@ -15,15 +15,20 @@ public class CrawlerServiceImp implements CrawlerService {
 
     private static final String URL = "https://news.ycombinator.com/";
     private static final Integer MAX_ENTRIES = 30;
+    private List<NewsEntry> cachedEntries;
 
     @Override
     public List<NewsEntry> fetchNewsEntries() {
-        return fetchEntries();
+        if (cachedEntries == null) {
+            cachedEntries = fetchEntries();
+        }
+        return cachedEntries;
     }
 
     public List<NewsEntry> fetchEntries() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
         WebDriver driver = new ChromeDriver(options);
         driver.get(URL);
         List<WebElement> items = driver.findElements(By.cssSelector("tr.athing"));
